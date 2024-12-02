@@ -5,10 +5,7 @@ from django.utils import timezone
 from account.models import User
 from django.db.models import Avg
 
-<<<<<<< HEAD
-=======
 
->>>>>>> add-option-to-product
 class Category(models.Model):
     name = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
@@ -22,8 +19,6 @@ class Category(models.Model):
         super(Category, self).save()
 
 
-<<<<<<< HEAD
-=======
 class Color(models.Model):
     name = models.CharField(max_length=20)
 
@@ -38,21 +33,14 @@ class Size(models.Model):
         return self.name
 
 
->>>>>>> add-option-to-product
 class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     price = models.IntegerField(default=0)
     product_image = models.ImageField(upload_to="product_images")
     category = models.ManyToManyField("product.Category", related_name="products")
-<<<<<<< HEAD
-    min_weight = models.CharField(max_length=50)
-    country = models.CharField(max_length=50)
-    quality = models.CharField(max_length=50)
-=======
     color = models.ManyToManyField("product.Color", related_name="products")
     size = models.ManyToManyField("product.Size", related_name="products", null=True, blank=True)
->>>>>>> add-option-to-product
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True, null=True, blank=True, allow_unicode=True)
 

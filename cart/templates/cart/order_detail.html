@@ -23,6 +23,8 @@
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">quantity</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Size</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,6 +47,16 @@
                             <td>
                                 <div class="input-group quantity mt-4" style="width: 100px;">
                                     {{ order.quantity }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    {{ order.color }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    {{ order.size }}
                                 </div>
                             </td>
                         </tr>

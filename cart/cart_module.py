@@ -18,19 +18,6 @@ class Cart:
             product = Product.objects.get(id=int(item["id"]))
             item["product"] = product
             item["total"] = int(item["quantity"]) * float(item["price"])
-<<<<<<< HEAD
-            item["unique_id"] = self.unique_id_generator(product.id)
-            yield item
-
-    def unique_id_generator(self, id):
-        result = f"{id}"
-        return result
-
-    def add(self, product, quantity):
-        unique = self.unique_id_generator(product.id)
-        if unique not in self.cart:
-            self.cart[unique] = {"quantity": 0, "price": str(product.price), "id": str(product.id)}
-=======
             item["unique_id"] = self.unique_id_generator(product.id, item["color"], item["size"])
             yield item
 
@@ -43,7 +30,6 @@ class Cart:
         if unique not in self.cart:
             self.cart[unique] = {"quantity": 0, "price": str(product.price), "color": color, "size": size,
                                  "id": str(product.id)}
->>>>>>> add-option-to-product
         self.cart[unique]["quantity"] += int(quantity)
         self.save()
 

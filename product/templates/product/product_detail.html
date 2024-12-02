@@ -23,10 +23,8 @@
                                 <i id="rating_count" class="fa fa-star text-secondary">{{ product.ratings.count }}</i>
 
                             </div>
-<<<<<<< HEAD
                             <p class="mb-4">{{ product.description }}</p>
                             <form action="{% url "cart:cart_add" product.id %}" method="post">
-=======
                             <form action="{% url "cart:cart_add" product.id %}" method="post">
                                 <div class="d-flex mb-3">
                                     {% if product.size.all %}
@@ -56,7 +54,6 @@
 
                                 </div>
                                 <p class="mb-4">{{ product.description }}</p>
->>>>>>> add-option-to-product
                                 {% csrf_token %}
                                 <div class="input-group quantity mb-5" style="width: 100px;">
                                     <div class="input-group-btn">
@@ -95,7 +92,6 @@
                                 </div>
                             </nav>
                             <div class="tab-content mb-5">
-<<<<<<< HEAD
                                 <div class="tab-pane active" id="nav-about" role="tabpanel"
                                      aria-labelledby="nav-about-tab">
                                     <p>{{ product.description }}</p>
@@ -130,8 +126,6 @@
                                         </div>
                                     </div>
                                 </div>
-=======
->>>>>>> add-option-to-product
                                 <div class="tab-pane" id="nav-mission" role="tabpanel"
                                      aria-labelledby="nav-mission-tab">
                                     {% for comment in product.comments.all %}
