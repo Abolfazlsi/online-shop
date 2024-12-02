@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Cart</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url "home:home" %}">Home</a></li>
+            <li class="breadcrumb-item active text-white">Cart</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+
+    <!-- Cart Page Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Products</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in order.orderitems.all %}
+                        <tr>
+                            <th scope="row">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ order.product.product_image.url }}"
+                                         class="img-fluid me-5 rounded-circle"
+                                         style="width: 80px; height: 80px;" alt="">
+                                </div>
+                            </th>
+                            <td>
+                                <p class="mb-0 mt-4">{{ order.product.name }}</p>
+                            </td>
+
+                            <td>
+                                <p class="mb-0 mt-4">{{ order.product.price }}$</p>
+                            </td>
+                            <td>
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    {{ order.quantity }}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            {% if request.user.addresses.all %}
+                <select class="form-control" aria-label="select an address">
+                    {% for address in order.user.addresses.all %}
+                        <option value="1">{{ address.address }}</option>
+                    {% endfor %}
+                </select>
+                <a href="{% url "account:add_address" %}?next={% url "cart:order_detail" order.id %}"
+                   class="btn btn-block btn-outline-dark font-weight-bold my-3 py-3">
+                    Add more address
+                </a>
+            {% else %}
+                <a href="{% url "account:add_address" %}?next={% url "cart:order_detail" order.id %}"
+                   class="btn btn-block btn-warning font-weight-bold my-3 py-3">
+                    Add a Address
+                </a>
+            {% endif %}
+            <form action="{% url "cart:discount_code" order.id %}" method="post">
+                {% csrf_token %}
+                <div class="mt-5">
+                    <input name="discount" type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4"
+                           placeholder="Coupon Code">
+                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary">Apply Coupon
+                    </button>
+                </div>
+            </form>
+            <div class="row g-4 justify-content-end">
+                <div class="col-8"></div>
+                <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                    <div class="bg-light rounded">
+                        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                            <h5 class="mb-0 ps-4 me-4">Total</h5>
+                            <p class="mb-0 pe-4">${{ order.total }}</p>
+                        </div>
+                        {% if request.user.addresses.all %}
+                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
+                                    type="button">Pay
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

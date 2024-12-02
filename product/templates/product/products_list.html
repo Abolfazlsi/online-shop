@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Shop</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Shop</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+
+    <!-- Fruits Shop Start-->
+    <div class="container-fluid fruite py-5">
+        <div class="container py-5">
+            <h1 class="mb-4">Fresh fruits shop</h1>
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="row g-4">
+                        <div class="col-lg-3">
+                            <div class="row g-4">
+                                {% include "includes/sidebar.html" %}
+                                <div>
+                                    <!-- Price Start -->
+                                    <span class="bg-white">Filter by price</span>
+                                    <form method="get">
+                                        <input type="hidden" name="q" value="{{ request.GET.q }}">
+                                        <div class="p-4 mb-30">
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <label for="min-price" class="m-1">Min</label>
+                                                <input type="number" id="min-price" name="min_price"
+                                                       value="{{ request.GET.min_price }}">
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <label for="max-price" class="m-1">Max</label>
+                                                <input type="number" id="max-price" name="max_price"
+                                                       value="{{ request.GET.max_price }}">
+                                            </div>
+                                        </div>
+                                        <h5 class="section-title position-relative text-uppercase mb-3"><span
+                                                class="bg-white pr-3">Filter By</span></h5>
+                                        <div class="bg-light p-4 mb-30">
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" value="cheapest" class="custom-control-input"
+                                                       name="filter"
+                                                       {% if request.GET.filter == "cheapest" %}checked{% endif %}>
+                                                <label class="custom-control-label" for="color-1">the Cheapest</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" value="expensive" class="custom-control-input"
+                                                       name="filter"
+                                                       {% if request.GET.filter == "expensive" %}checked{% endif %}>
+                                                <label class="custom-control-label" for="color-1">the most
+                                                    expensive</label>
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-secondary"></input>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="row g-4 justify-content-center" id="product-list">
+                                {% for product in product_list %}
+                                    <div class="col-md-6 col-lg-6 col-xl-4">
+                                        <div class="rounded position-relative fruite-item">
+                                            <div class="fruite-img">
+                                                <a href="{{ product.get_absolute_url }}">
+                                                    <img src="{{ product.product_image.url }}"
+                                                         class="img-fluid w-100 rounded-top"
+                                                         alt="">
+                                                </a>
+                                            </div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                                                <p>{{ product.description }}</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">${{ product.price }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="pagination d-flex justify-content-center mt-5">
+                                {% if product_list.has_other_pages %}
+                                    {% if product_list.has_previous %}
+                                        <a href="?page={{ product_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                           class="rounded">&laquo;</a>
+                                    {% endif %}
+
+                                    {% for num in product_list.paginator.page_range %}
+                                        {% if num == 1 or num == product_list.paginator.num_pages %}
+                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                               class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
+                                        {% elif num >= product_list.number|add:-1 and num <= product_list.number|add:1 %}
+                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                               class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
+                                        {% elif num == product_list.number|add:-2 and num > 1 %}
+                                            <a class="rounded">. . .</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if product_list.has_next %}
+                                        <a href="?page={{ product_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                           class="rounded">&raquo;</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Fruits Shop End-->
+
+
+{% endblock %}
