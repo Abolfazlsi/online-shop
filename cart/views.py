@@ -15,12 +15,13 @@ class CartDetailView(View):
 class CartAddView(View):
     def post(self, request, pk):
         product = get_object_or_404(Product, id=pk)
-        quantity = request.POST.get("quantity")
+        quantity, color, size = request.POST.get("quantity"), request.POST.get("color", "empty"), request.POST.get(
+            "size", "empty")
         cart = Cart(request)
         if quantity == "0" or int(quantity) < 0:
             return redirect("product:product_detail", product.slug)
         else:
-            cart.add(product, quantity)
+            cart.add(product, quantity, color, size)
         return redirect("cart:cart_detail")
 
 
@@ -41,8 +42,8 @@ class OrderCreationView(LoginRequiredMixin, View):
         cart = Cart(request)
         order = Order.objects.create(user=request.user, total=cart.final_total())
         for item in cart:
-            OrderItem.objects.create(order=order, product=item["product"], quantity=item["quantity"],
-                                     price=item["price"])
+            OrderItem.objects.create(order=order, product=item["product"], quantity=item["quantity"], size=item["size"],
+                                     color=item["color"], price=item["price"])
         cart.remove_cart()
 
         return redirect("cart:order_detail", order.id)
