@@ -23,8 +23,40 @@
                                 <i id="rating_count" class="fa fa-star text-secondary">{{ product.ratings.count }}</i>
 
                             </div>
+<<<<<<< HEAD
                             <p class="mb-4">{{ product.description }}</p>
                             <form action="{% url "cart:cart_add" product.id %}" method="post">
+=======
+                            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                <div class="d-flex mb-3">
+                                    {% if product.size.all %}
+                                        <p class="text-dark mr-3">Sizes :</p>
+                                    {% endif %}
+                                    {% for size in product.size.all %}
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="{{ size.name }}"
+                                                   name="size" value="{{ size.name }}">
+                                            <label class="custom-control-label btn btn-outline-dark"
+                                                   for="{{ size.name }}">{{ size.name }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-flex mb-4">
+                                    <strong class="text-dark mr-3">Colors:</strong>
+
+                                    {% for color in product.color.all %}
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="{{ color.name }}"
+                                                   name="color" value="{{ color.name }}">
+                                            <label class="custom-control-label btn btn-outline-dark"
+                                                   for="{{ color.name }}">{{ color.name }}</label>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                                <p class="mb-4">{{ product.description }}</p>
+>>>>>>> add-option-to-product
                                 {% csrf_token %}
                                 <div class="input-group quantity mb-5" style="width: 100px;">
                                     <div class="input-group-btn">
@@ -63,6 +95,7 @@
                                 </div>
                             </nav>
                             <div class="tab-content mb-5">
+<<<<<<< HEAD
                                 <div class="tab-pane active" id="nav-about" role="tabpanel"
                                      aria-labelledby="nav-about-tab">
                                     <p>{{ product.description }}</p>
@@ -97,6 +130,8 @@
                                         </div>
                                     </div>
                                 </div>
+=======
+>>>>>>> add-option-to-product
                                 <div class="tab-pane" id="nav-mission" role="tabpanel"
                                      aria-labelledby="nav-mission-tab">
                                     {% for comment in product.comments.all %}

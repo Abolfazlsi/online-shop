@@ -22,7 +22,13 @@
                         <th scope="col">Products</th>
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
+<<<<<<< HEAD
                         <th scope="col">quantity</th>
+=======
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Size</th>
+>>>>>>> add-option-to-product
                         <th scope="col">Total</th>
                         <th scope="col">Handle</th>
                     </tr>
@@ -50,6 +56,19 @@
                                 </div>
                             </td>
                             <td>
+<<<<<<< HEAD
+=======
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    {{ item.color }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    {{ item.size }}
+                                </div>
+                            </td>
+                            <td>
+>>>>>>> add-option-to-product
                                 <p class="mb-0 mt-4">{{ item.total }} $</p>
                             </td>
                             <td>
@@ -71,8 +90,14 @@
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
                             <p class="mb-0 pe-4">${{ cart.final_total }}</p>
                         </div>
+<<<<<<< HEAD
                         <a href="{% url "cart:order_creation" %}" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
                                 type="button">Proceed Checkout
+=======
+                        <a href="{% url "cart:order_creation" %}"
+                           class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
+                           type="button">Proceed Checkout
+>>>>>>> add-option-to-product
                         </a>
                     </div>
                 </div>

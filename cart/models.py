@@ -20,6 +20,11 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="orderitems")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="orderitems")
     quantity = models.IntegerField()
+<<<<<<< HEAD
+=======
+    size = models.CharField(max_length=10, null=True)
+    color = models.CharField(max_length=15, null=True)
+>>>>>>> add-option-to-product
     price = models.FloatField()
 
     def __str__(self):
