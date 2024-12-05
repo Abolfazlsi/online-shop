@@ -27,7 +27,7 @@
                                 <div>
                                     <!-- Price Start -->
                                     <span class="bg-white">Filter by price</span>
-                                    <form method="get">
+                                    <form>
                                         <input type="hidden" name="q" value="{{ request.GET.q }}">
                                         <div class="p-4 mb-30">
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -42,7 +42,7 @@
                                             </div>
                                         </div>
                                         <h5 class="section-title position-relative text-uppercase mb-3"><span
-                                                class="bg-white pr-3">Filter By</span></h5>
+                                                class="bg-white pr-3">Order BY ... </span></h5>
                                         <div class="bg-light p-4 mb-30">
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                                 <input type="checkbox" value="cheapest" class="custom-control-input"
@@ -56,6 +56,62 @@
                                                        {% if request.GET.filter == "expensive" %}checked{% endif %}>
                                                 <label class="custom-control-label" for="color-1">the most
                                                     expensive</label>
+                                            </div>
+                                        </div>
+                                        <h5 class="section-title position-relative text-uppercase mb-3"><span
+                                                class="bg-white pr-3">Filter By Color</span></h5>
+                                        <div class="bg-light p-4 mb-30">
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="color" value="White"
+                                                       class="custom-control-input" id="color-1"
+                                                        {% if "White" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-1">White</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="color" value="Black"
+                                                       class="custom-control-input" id="color-2"
+                                                        {% if "Black" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-2">Black</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="color" value="Blue"
+                                                       class="custom-control-input" id="color-3"
+                                                        {% if "Blue" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-3">Blue</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="color" value="Red"
+                                                       class="custom-control-input" id="color-4"
+                                                        {% if "Red" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-4">Red</label>
+                                            </div>
+                                        </div>
+                                        <h5 class="section-title position-relative text-uppercase mb-3"><span
+                                                class="bg-white pr-3">Filter By Size</span></h5>
+                                        <div class="bg-light p-4 mb-30">
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="size" value="L"
+                                                       class="custom-control-input"
+                                                       id="size-1" {% if "L" in selected_sizes %} checked {% endif %}>
+                                                <label class="custom-control-label" for="size-1">L</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="size" value="XS"
+                                                       class="custom-control-input"
+                                                       id="size-2" {% if "XS" in selected_sizes %} checked {% endif %}>
+                                                <label class="custom-control-label" for="size-2">XS</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="size" value="XL"
+                                                       class="custom-control-input"
+                                                       id="size-3" {% if "XL" in selected_sizes %} checked {% endif %}>
+                                                <label class="custom-control-label" for="size-3">XL</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                                <input type="checkbox" name="size" value="X"
+                                                       class="custom-control-input"
+                                                       id="size-3" {% if "X" in selected_sizes %} checked {% endif %}>
+                                                <label class="custom-control-label" for="size-3">X</label>
                                             </div>
                                         </div>
                                         <input type="submit" class="btn btn-secondary"></input>
@@ -89,23 +145,44 @@
                             <div class="pagination d-flex justify-content-center mt-5">
                                 {% if product_list.has_other_pages %}
                                     {% if product_list.has_previous %}
-                                        <a href="?page={{ product_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                        <a href="?page={{ product_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
+                                            {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
+                                            {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
+                                            {% for color in selected_colors %}&color={{ color }}{% endfor %}
+                                            {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
                                            class="rounded">&laquo;</a>
                                     {% endif %}
 
                                     {% for num in product_list.paginator.page_range %}
                                         {% if num == 1 or num == product_list.paginator.num_pages %}
-                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
+                                                {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
+                                                {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}
+                                                {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
+                                                {% for color in selected_colors %}&color={{ color }}{% endfor %}
+                                                {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
                                                class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
+
                                         {% elif num >= product_list.number|add:-1 and num <= product_list.number|add:1 %}
-                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
+                                                {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
+                                                {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}
+                                                {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
+                                                {% for color in selected_colors %}&color={{ color }}{% endfor %}
+                                                {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
                                                class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
+
                                         {% elif num == product_list.number|add:-2 and num > 1 %}
                                             <a class="rounded">. . .</a>
                                         {% endif %}
                                     {% endfor %}
                                     {% if product_list.has_next %}
-                                        <a href="?page={{ product_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"
+                                        <a href="?page={{ product_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
+                                                {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
+                                                {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}
+                                                {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
+                                                {% for color in selected_colors %}&color={{ color }}{% endfor %}
+                                                {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
                                            class="rounded">&raquo;</a>
                                     {% endif %}
                                 {% endif %}

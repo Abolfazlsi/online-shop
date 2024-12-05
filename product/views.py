@@ -56,6 +56,8 @@ class ProductsListView(ListView):
         min_price = request.GET.get("min_price")
         max_price = request.GET.get("max_price")
         filter = request.GET.get("filter")
+        colors = request.GET.getlist("color")
+        sizes = request.GET.getlist("size")
         products = Product.objects.all()
         page_number = request.GET.get("page", 1)
 
@@ -67,11 +69,19 @@ class ProductsListView(ListView):
         elif filter == "expensive":
             products = products.order_by("-price")
 
-        paginator = Paginator(products, 9)
+        if colors:
+            products = products.filter(color__name__in=colors).distinct()
+
+        if sizes:
+            products = products.filter(size__name__in=sizes).distinct()
+
+        paginator = Paginator(products, 3)
         objects_list = paginator.get_page(page_number)
 
         context = super(ProductsListView, self).get_context_data()
         context["product_list"] = objects_list
+        context["selected_colors"] = colors
+        context["selected_sizes"] = sizes
         return context
 
 
@@ -93,7 +103,8 @@ class SearchProductView(ListView):
         min_price = request.GET.get("min_price")
         max_price = request.GET.get("max_price")
         filter = request.GET.get("filter")
-
+        colors = request.GET.getlist("color")
+        sizes = request.GET.getlist("size")
 
         if min_price and max_price:
             products = products.filter(price__gte=min_price, price__lte=max_price).distinct()
@@ -103,11 +114,19 @@ class SearchProductView(ListView):
         elif filter == "expensive":
             products = products.order_by("-price").distinct()
 
+        if colors:
+            products = products.filter(color__name__in=colors).distinct()
+
+        if sizes:
+            products = products.filter(size__name__in=sizes).distinct()
+
         paginator = Paginator(products, 3)
         objects_list = paginator.get_page(page_number)
 
         context = super(SearchProductView, self).get_context_data()
         context["product_list"] = objects_list
+        context["selected_colors"] = colors
+        context["selected_sizes"] = sizes
         return context
 
 
@@ -128,6 +147,8 @@ class CategoryDetailView(ListView):
         min_price = request.GET.get("min_price")
         max_price = request.GET.get("max_price")
         filter = request.GET.get("filter")
+        colors = request.GET.getlist("color")
+        sizes = request.GET.getlist("size")
         products = Product.objects.filter(category__slug=slug)
         page_number = request.GET.get("page")
 
@@ -139,9 +160,17 @@ class CategoryDetailView(ListView):
         elif filter == "expensive":
             products = products.order_by("-price")
 
+        if colors:
+            products = products.filter(color__name__in=colors).distinct()
+
+        if sizes:
+            products = products.filter(size__name__in=sizes).distinct()
+
         paginator = Paginator(products, 9)
         objects_list = paginator.get_page(page_number)
 
         context = super(CategoryDetailView, self).get_context_data()
         context["product_list"] = objects_list
+        context["selected_colors"] = colors
+        context["selected_sizes"] = sizes
         return context

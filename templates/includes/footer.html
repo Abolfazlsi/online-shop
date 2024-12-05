@@ -17,7 +17,6 @@
                     <h4 class="text-light mb-3">Shop Info</h4>
                     <a class="btn-link" href="">About Us</a>
                     <a class="btn-link" href="">Contact Us</a>
-                    <a class="btn-link" href="">Privacy Policy</a>
                     <p class="btn-link">.</p>
                     <p class="btn-link">.</p>
                     <p class="btn-link">.</p>
@@ -26,9 +25,9 @@
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex flex-column text-start footer-item">
                     <h4 class="text-light mb-3">Account</h4>
-                    <p class="btn-link">My Account</p>
-                    <p class="btn-link">Shop details</p>
-                    <p class="btn-link">Shopping Cart</p>
+                    <a href="{% url "account:user_profile" %}" class="btn-link">My Account</a>
+                    <a href="{% url "account:add_address" %}" class="btn-link">check out</a>
+                    <a href="{% url "cart:cart_detail" %}" class="btn-link">Shopping Cart</a>
                     <p class="btn-link">.</p>
                     <p class="btn-link">.</p>
                 </div>
