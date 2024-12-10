@@ -1,7 +1,7 @@
 <div class="col-lg-12">
     <div class="input-group w-100 mx-auto d-flex mb-4">
         <form action="{% url "product:search_product" %}">
-            <input type="search" class="form-control p-3" placeholder="keywords"
+            <input type="search" class="form-control p-3" placeholder="نام محصول ..."
                    aria-describedby="search-icon-1" name="q" value="{{ request.GET.q }}">
         </form>
         <span id="search-icon-1" class="input-group-text p-3"><i

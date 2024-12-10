@@ -44,13 +44,13 @@ class UserChangeForm(forms.ModelForm):
 
 class OtpRegisterLoginForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput(
-        attrs={"class": "w-100 form-control border-0 py-3 mb-4", "placeholder": "Enter your phone"}),
+        attrs={"class": "w-100 form-control border-0 py-3 mb-4", "placeholder": "شماره تلفن خود را وارد کنید"}),
         validators=[validators.MaxLengthValidator(11)])
 
 
 class OtpVerifyForm(forms.Form):
     code = forms.CharField(widget=forms.TextInput(
-        attrs={"class": "w-100 form-control border-0 py-3 mb-4", "placeholder": "Enter yore code ..."}),
+        attrs={"class": "w-100 form-control border-0 py-3 mb-4", "placeholder": "کد ارسال شده را وارد کنید"}),
         validators=[validators.MaxLengthValidator(4)])
 
 

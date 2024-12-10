@@ -19,12 +19,12 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Products</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">quantity</th>
-                        <th scope="col">Color</th>
-                        <th scope="col">Size</th>
+                        <th scope="col">محصول</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">قیمت</th>
+                        <th scope="col">تعداد</th>
+                        <th scope="col">رنگ</th>
+                        <th scope="col">سایز</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -73,20 +73,20 @@
                 </select>
                 <a href="{% url "account:add_address" %}?next={% url "cart:order_detail" order.id %}"
                    class="btn btn-block btn-outline-dark font-weight-bold my-3 py-3">
-                    Add more address
+                    اضافه کردن ادرس بیشتر
                 </a>
             {% else %}
                 <a href="{% url "account:add_address" %}?next={% url "cart:order_detail" order.id %}"
                    class="btn btn-block btn-warning font-weight-bold my-3 py-3">
-                    Add a Address
+                    اضافه کردن ادرس
                 </a>
             {% endif %}
             <form action="{% url "cart:discount_code" order.id %}" method="post">
                 {% csrf_token %}
                 <div class="mt-5">
                     <input name="discount" type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4"
-                           placeholder="Coupon Code">
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary">Apply Coupon
+                           placeholder="کد تخفیف">
+                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary">تایید
                     </button>
                 </div>
             </form>
@@ -95,12 +95,12 @@
                 <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
                     <div class="bg-light rounded">
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                            <h5 class="mb-0 ps-4 me-4">Total</h5>
+                            <h5 class="mb-0 ps-4 me-4">جمع کل</h5>
                             <p class="mb-0 pe-4">${{ order.total }}</p>
                         </div>
                         {% if request.user.addresses.all %}
                             <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                                    type="button">Pay
+                                    type="button">پرداخت
                             </button>
                         {% endif %}
                     </div>

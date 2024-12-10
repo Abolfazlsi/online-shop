@@ -3,10 +3,10 @@
 
 {% block main %}
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Cart</h1>
+        <h1 class="text-center text-white display-6">سلد خرید</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="{% url "home:home" %}">Home</a></li>
-            <li class="breadcrumb-item active text-white">Cart</li>
+            <li class="breadcrumb-item active text-white">سبد خرید</li>
+            <li class="breadcrumb-item"><a href="{% url "home:home" %}">خانه</a></li>
         </ol>
     </div>
     <!-- Single Page Header End -->
@@ -19,14 +19,14 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Products</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Color</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">محصول</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">قیمت</th>
+                        <th scope="col">تعداد</th>
+                        <th scope="col">رنگ</th>
+                        <th scope="col">سایز</th>
+                        <th scope="col">جمع کل</th>
+                        <th scope="col">حذف</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -80,11 +80,11 @@
                 <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
                     <div class="bg-light rounded">
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                            <h5 class="mb-0 ps-4 me-4">Total</h5>
+                            <h5 class="mb-0 ps-4 me-4">جمع کل</h5>
                             <p class="mb-0 pe-4">${{ cart.final_total }}</p>
                         </div>
                         <a href="{% url "cart:order_creation" %}" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                                type="button">Proceed Checkout
+                                type="button">پرداخت
                         </a>
                     </div>
                 </div>

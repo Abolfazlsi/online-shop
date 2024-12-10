@@ -11,7 +11,7 @@ def best_products(request):
 
 
 def products(request):
-    all_product = Product.objects.all()[:9]
+    all_product = Product.objects.all()[:8]
 
     return {"all_product": all_product}
 
@@ -28,48 +28,48 @@ def cart_count(request):
     return {"cart": cart}
 
 
-def vegetable_category(request):
-    vegetables_category = Category.objects.filter(name__icontains="vegetables").first()
+def phone_category(request):
+    phones_category = Category.objects.filter(name__icontains="Phone").first()
 
-    if vegetables_category:
-        product_vegetables = Product.objects.filter(category=vegetables_category).order_by("-created_at")[:9]
+    if phones_category:
+        product_phone = Product.objects.filter(category=phones_category).order_by("-created_at")[:9]
     else:
-        product_vegetables = Product.objects.none()
+        product_phone = Product.objects.none()
 
-    return {"product_vegetables": product_vegetables}
+    return {"product_phone": product_phone}
 
 
-def fruit_category(request):
-    fruits_category = Category.objects.filter(name__icontains="fruits").first()
+def pc_category(request):
+    pcc_category = Category.objects.filter(name__icontains="PC").first()
 
-    if fruits_category:
-        product_fruits = Product.objects.filter(category=fruits_category).order_by("-created_at")[:9]
+    if pcc_category:
+        product_pc = Product.objects.filter(category=pcc_category).order_by("-created_at")[:9]
     else:
-        product_fruits = Product.objects.none()
+        product_pc = Product.objects.none()
 
-    return {"product_fruits": product_fruits}
+    return {"product_pc": product_pc}
 
 
-def bread_category(request):
-    breads_category = Category.objects.filter(name__icontains="bread").first()
+def laptop_category(request):
+    laptops_category = Category.objects.filter(name__icontains="Laptop").first()
 
-    if breads_category:
-        product_breads = Product.objects.filter(category=breads_category).order_by("-created_at")[:9]
+    if laptops_category:
+        product_laptops = Product.objects.filter(category=laptops_category).order_by("-created_at")[:9]
     else:
-        product_breads = Product.objects.none()
+        product_laptops = Product.objects.none()
 
-    return {"product_breads": product_breads}
+    return {"product_laptops": product_laptops}
 
 
-def meat_category(request):
-    meats_category = Category.objects.filter(name__icontains="meat").first()
+def charger_category(request):
+    chargers_category = Category.objects.filter(name__icontains="Charger").first()
 
-    if meats_category:
-        product_meats = Product.objects.filter(category=meats_category).order_by("-created_at")[:9]
+    if chargers_category:
+        product_chargers = Product.objects.filter(category=chargers_category).order_by("-created_at")[:9]
     else:
-        product_meats = Product.objects.none()
+        product_chargers = Product.objects.none()
 
-    return {"product_meats": product_meats}
+    return {"product_chargers": product_chargers}
 
 
 def product_popular(request):
@@ -88,3 +88,7 @@ def categories(request):
     category = Category.objects.all()
 
     return {"categories": category}
+
+
+def related_product(request):
+    related_products = Product.objects.filter()

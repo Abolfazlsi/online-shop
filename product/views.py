@@ -6,6 +6,12 @@ from product.models import Product, Rating, Comment, Category
 from django.core import serializers
 from django.template.loader import render_to_string
 
+from django.views.generic import DetailView
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from .models import Product, Comment
+import random
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -24,8 +30,18 @@ class ProductDetailView(DetailView):
                 'slug': product.slug
             })
 
-    def get_context_data(self, **kwargs, ):
+    def get_related_products(self, product):
+        categories = product.category.all()
+
+        related_products = Product.objects.filter(category__in=categories).exclude(slug=product.slug)[:12]
+        return related_products
+
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        product = self.object
+
+        context['related_products'] = self.get_related_products(product)
+
         if self.request.user.is_authenticated:
             if self.request.user.ratings.filter(product=self.object, user=self.request.user).exists():
                 context["is_rate"] = True
@@ -166,7 +182,7 @@ class CategoryDetailView(ListView):
         if sizes:
             products = products.filter(size__name__in=sizes).distinct()
 
-        paginator = Paginator(products, 9)
+        paginator = Paginator(products, 3)
         objects_list = paginator.get_page(page_number)
 
         context = super(CategoryDetailView, self).get_context_data()

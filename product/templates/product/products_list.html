@@ -4,11 +4,10 @@
 {% block main %}
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Shop</h1>
+        <h1 class="text-center text-white display-6">محصولات</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Shop</li>
+            <li class="breadcrumb-item active text-white">محصولات</li>
+            <li class="breadcrumb-item"><a href="{% url "home:home" %}">خانه</a></li>
         </ol>
     </div>
     <!-- Single Page Header End -->
@@ -17,7 +16,7 @@
     <!-- Fruits Shop Start-->
     <div class="container-fluid fruite py-5">
         <div class="container py-5">
-            <h1 class="mb-4">Fresh fruits shop</h1>
+            <h1 class="mb-4">جدید ترین محصولات</h1>
             <div class="row g-4">
                 <div class="col-lg-12">
                     <div class="row g-4">
@@ -26,68 +25,67 @@
                                 {% include "includes/sidebar.html" %}
                                 <div>
                                     <!-- Price Start -->
-                                    <span class="bg-white">Filter by price</span>
+                                    <span class="bg-white">فیلتر بر اساس قیمت</span>
                                     <form>
                                         <input type="hidden" name="q" value="{{ request.GET.q }}">
                                         <div class="p-4 mb-30">
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                                <label for="min-price" class="m-1">Min</label>
+                                                <label for="min-price" class="m-1">حداکثر</label>
                                                 <input type="number" id="min-price" name="min_price"
                                                        value="{{ request.GET.min_price }}">
                                             </div>
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                                <label for="max-price" class="m-1">Max</label>
+                                                <label for="max-price" class="m-1">حداقل</label>
                                                 <input type="number" id="max-price" name="max_price"
                                                        value="{{ request.GET.max_price }}">
                                             </div>
                                         </div>
                                         <h5 class="section-title position-relative text-uppercase mb-3"><span
-                                                class="bg-white pr-3">Order BY ... </span></h5>
+                                                class="bg-white pr-3">مرتب سازی</span></h5>
                                         <div class="bg-light p-4 mb-30">
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                                 <input type="checkbox" value="cheapest" class="custom-control-input"
                                                        name="filter"
                                                        {% if request.GET.filter == "cheapest" %}checked{% endif %}>
-                                                <label class="custom-control-label" for="color-1">the Cheapest</label>
+                                                <label class="custom-control-label" for="color-1">ارزانترین</label>
                                             </div>
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                                 <input type="checkbox" value="expensive" class="custom-control-input"
                                                        name="filter"
                                                        {% if request.GET.filter == "expensive" %}checked{% endif %}>
-                                                <label class="custom-control-label" for="color-1">the most
-                                                    expensive</label>
+                                                <label class="custom-control-label" for="color-1">گران ترین</label>
                                             </div>
                                         </div>
                                         <h5 class="section-title position-relative text-uppercase mb-3"><span
-                                                class="bg-white pr-3">Filter By Color</span></h5>
+                                                class="bg-white pr-3">فیلتر بر اساس رنگ</span></h5>
                                         <div class="bg-light p-4 mb-30">
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                                <input type="checkbox" name="color" value="White"
+                                                <input type="checkbox" name="color" value="سفید"
                                                        class="custom-control-input" id="color-1"
-                                                        {% if "White" in selected_colors %} checked {% endif %}>
-                                                <label class="custom-control-label" for="color-1">White</label>
+                                                        {% if "سفید" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-1">سفید</label>
                                             </div>
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                                <input type="checkbox" name="color" value="Black"
+                                                <input type="checkbox" name="color" value="سیاه"
                                                        class="custom-control-input" id="color-2"
-                                                        {% if "Black" in selected_colors %} checked {% endif %}>
-                                                <label class="custom-control-label" for="color-2">Black</label>
+                                                        {% if "سیاه" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-2">سیاه</label>
                                             </div>
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                                <input type="checkbox" name="color" value="Blue"
+                                                <input type="checkbox" name="color" value="آبی"
                                                        class="custom-control-input" id="color-3"
-                                                        {% if "Blue" in selected_colors %} checked {% endif %}>
-                                                <label class="custom-control-label" for="color-3">Blue</label>
+                                                        {% if "آبی" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-3">آبی</label>
                                             </div>
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                                <input type="checkbox" name="color" value="Red"
+                                                <input type="checkbox" name="color" value="قرمز"
                                                        class="custom-control-input" id="color-4"
-                                                        {% if "Red" in selected_colors %} checked {% endif %}>
-                                                <label class="custom-control-label" for="color-4">Red</label>
+                                                        {% if "فرمز" in selected_colors %} checked {% endif %}>
+                                                <label class="custom-control-label" for="color-4">قرمز</label>
                                             </div>
                                         </div>
                                         <h5 class="section-title position-relative text-uppercase mb-3"><span
-                                                class="bg-white pr-3">Filter By Size</span></h5>
+                                                class="bg-white pr-3">فیلتر بر اساس سایز</span></h5>
                                         <div class="bg-light p-4 mb-30">
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                                 <input type="checkbox" name="size" value="L"
@@ -133,7 +131,7 @@
                                             </div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                 <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-                                                <p>{{ product.description }}</p>
+                                                <p>{{ product.description|truncatewords:10 }}</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">${{ product.price }}</p>
                                                 </div>
@@ -177,13 +175,7 @@
                                         {% endif %}
                                     {% endfor %}
                                     {% if product_list.has_next %}
-                                        <a href="?page={{ product_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
-                                                {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
-                                                {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}
-                                                {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
-                                                {% for color in selected_colors %}&color={{ color }}{% endfor %}
-                                                {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
-                                           class="rounded">&raquo;</a>
+                                        <a href="?page={{ product_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}{% for color in selected_colors %}&color={{ color }}{% endfor %}{% for size in selected_sizes %}&size={{ size }}{% endfor %}" class="rounded">&raquo;</a>
                                     {% endif %}
                                 {% endif %}
                             </div>

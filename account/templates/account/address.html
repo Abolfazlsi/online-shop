@@ -4,11 +4,10 @@
 {% block main %}
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Contact</h1>
+        <h1 class="text-center text-white display-6">ادرسس</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Contact</li>
+            <li class="breadcrumb-item active text-white">ادرسس</li>
+            <li class="breadcrumb-item"><a href="#">خانه</a></li>
         </ol>
     </div>
     <!-- Single Page Header End -->
@@ -21,15 +20,24 @@
                 <div class="row g-4">
                     <div class="col-lg-7">
                         {% if request.user.addresses.all %}
-                            <p class="alert alert-success">you have {{ request.user.addresses.count }} address</p>
+                            <p class="alert alert-success">شما {{ request.user.addresses.count }} ادرسس دارید </p>
                         {% else %}
-                            <p class="alert alert-danger">you don't have any address</p>
+                            <p class="alert alert-danger">شما هیچ ادرسی ندارید</p>
                         {% endif %}
                         <form method="post">
                             {% csrf_token %}
-                            {{ form }}
+                            <label for="">نام و نام خانوادگی</label>
+                            {{ form.fullname }}
+                            <label for="">شماره تلفن</label>
+                            {{ form.phone }}
+                            <label for="">ادرسس</label>
+                            {{ form.address }}
+                            <label for="">ایمیل</label>
+                            {{ form.email }}
+                            <label for="">کد پستی</label>
+                            {{ form.postal_code }}
                             <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary "
-                                    type="submit">Submit
+                                    type="submit">ثبت
                             </button>
                         </form>
                     </div>

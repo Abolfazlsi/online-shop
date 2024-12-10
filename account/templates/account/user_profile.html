@@ -4,11 +4,9 @@
 {% block main %}
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Contact</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Contact</li>
+            <li class="breadcrumb-item active text-white">پروفایل</li>
+            <li class="breadcrumb-item"><a href="#">خانه</a></li>
         </ol>
     </div>
     <!-- Single Page Header End -->
@@ -22,9 +20,12 @@
                     <div class="col-lg-7">
                         <form method="post">
                             {% csrf_token %}
-                            {{ form }}
+                            <label for="">نام و نام خانوادگی</label>
+                            {{ form.fullname }}
+                            <label for="">ایمیل</label>
+                            {{ form.email }}
                             <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary "
-                                    type="submit">Submit
+                                    type="submit">ثبت
                             </button>
                         </form>
                     </div>
