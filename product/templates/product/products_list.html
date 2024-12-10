@@ -80,7 +80,7 @@
                                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                                 <input type="checkbox" name="color" value="قرمز"
                                                        class="custom-control-input" id="color-4"
-                                                        {% if "فرمز" in selected_colors %} checked {% endif %}>
+                                                        {% if "قرمز" in selected_colors %} checked {% endif %}>
                                                 <label class="custom-control-label" for="color-4">قرمز</label>
                                             </div>
                                         </div>
@@ -143,32 +143,15 @@
                             <div class="pagination d-flex justify-content-center mt-5">
                                 {% if product_list.has_other_pages %}
                                     {% if product_list.has_previous %}
-                                        <a href="?page={{ product_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
-                                            {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
-                                            {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
-                                            {% for color in selected_colors %}&color={{ color }}{% endfor %}
-                                            {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
-                                           class="rounded">&laquo;</a>
+                                        <a href="?page={{ product_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}{% for color in selected_colors %}&color={{ color }}{% endfor %}{% for size in selected_sizes %}&size={{ size }}{% endfor %}"class="rounded">&laquo;</a>
                                     {% endif %}
 
                                     {% for num in product_list.paginator.page_range %}
                                         {% if num == 1 or num == product_list.paginator.num_pages %}
-                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
-                                                {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
-                                                {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}
-                                                {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
-                                                {% for color in selected_colors %}&color={{ color }}{% endfor %}
-                                                {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
-                                               class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
+                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}{% for color in selected_colors %}&color={{ color }}{% endfor %}{% for size in selected_sizes %}&size={{ size }}{% endfor %}"class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
 
                                         {% elif num >= product_list.number|add:-1 and num <= product_list.number|add:1 %}
-                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}
-                                                {% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}
-                                                {% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}
-                                                {% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}
-                                                {% for color in selected_colors %}&color={{ color }}{% endfor %}
-                                                {% for size in selected_sizes %}&size={{ size }}{% endfor %}"
-                                               class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
+                                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}{% for color in selected_colors %}&color={{ color }}{% endfor %}{% for size in selected_sizes %}&size={{ size }}{% endfor %}"class="{% if num == product_list.number %}active{% endif %} rounded">{{ num }}</a>
 
                                         {% elif num == product_list.number|add:-2 and num > 1 %}
                                             <a class="rounded">. . .</a>
