@@ -3,7 +3,7 @@
 
 {% block main %}
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">سلد خرید</h1>
+        <h1 class="text-center text-white display-6">سبد خرید</h1>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item active text-white">سبد خرید</li>
             <li class="breadcrumb-item"><a href="{% url "home:home" %}">خانه</a></li>
@@ -83,9 +83,11 @@
                             <h5 class="mb-0 ps-4 me-4">جمع کل</h5>
                             <p class="mb-0 pe-4">${{ cart.final_total }}</p>
                         </div>
+                        {% if cart.final_total > 0 %}
                         <a href="{% url "cart:order_creation" %}" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
                                 type="button">پرداخت
                         </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

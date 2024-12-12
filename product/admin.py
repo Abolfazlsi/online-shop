@@ -1,6 +1,6 @@
 from django.contrib import admin
 from product.models import Category, Product, Rating, Comment
-from product.models import Category, Product, Rating, Comment, Color, Size
+from product.models import Category, Product, Rating, Comment, Color, Size, ContactUs
 
 
 @admin.register(Category)
@@ -35,3 +35,9 @@ class RatingAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("user", "product")
+
+
+@admin.register(ContactUs)
+class ContactUsAdmin(admin.ModelAdmin):
+    list_display = ("user", "email")
+    search_fields = ("email",)

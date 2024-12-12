@@ -102,3 +102,11 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ("-created_at",)
+
+class ContactUs(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="contact_us")
+    email = models.EmailField()
+    text = models.TextField()
+
+    def __str__(self):
+        return self.email

@@ -2,12 +2,7 @@ from product.models import Product, Category
 from cart.cart_module import Cart
 from django.db.models import Avg
 from django.db.models import Count
-
-
-def best_products(request):
-    best_product = Product.objects.all().order_by("-created_at")[:3]
-
-    return {"best_product": best_product}
+from account.models import MyInfo
 
 
 def products(request):
@@ -92,3 +87,9 @@ def categories(request):
 
 def related_product(request):
     related_products = Product.objects.filter()
+
+
+def my_info(request):
+    info = MyInfo.objects.all().last()
+
+    return {"info": info}

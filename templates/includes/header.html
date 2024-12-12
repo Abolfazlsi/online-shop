@@ -13,15 +13,9 @@
         <div class="d-flex justify-content-between">
             <div class="top-info ps-2">
                 <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
-                                                                                                 class="text-white">123
-                    Street, New York</a></small>
+                class="text-white">{{ info.address }}</a></small>
                 <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-                                                                                          class="text-white">Email@Example.com</a></small>
-            </div>
-            <div class="top-link pe-2">
-                <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
+                class="text-white">{{ info.email }}</a></small>
             </div>
         </div>
     </div>
@@ -34,13 +28,13 @@
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="#"
-                       class="nav-item nav-link">تماس با ما</a>
+                    <a href="{% url "product:contact_us" %}"
+                       class="nav-item nav-link {% if request.resolver_match.url_name == "contact_us" %}active{% endif %}">تماس با ما</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">صفحات</a>
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="{% url "cart:cart_detail" %}" class="dropdown-item">سبد خرید</a>
-                            <a href="{% url "account:add_address" %}" class="dropdown-item">اطللاعات حساب</a>
+                            <a href="{% url "cart:cart_detail" %}" class="dropdown-item {% if request.resolver_match.url_name == "cart_detail" %}active{% endif %}">سبد خرید</a>
+                            <a href="{% url "account:add_address" %}" class="dropdown-item {% if request.resolver_match.url_name == "add_address" %}active{% endif %}">اطلاعات حساب</a>
                         </div>
                     </div>
                     <a href="{% url "product:products_list" %}"

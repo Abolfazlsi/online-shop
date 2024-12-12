@@ -8,4 +8,5 @@ urlpatterns = [
     path("products-list/", views.ProductsListView.as_view(), name="products_list"),
     path("search-product/", views.SearchProductView.as_view(), name="search_product"),
     re_path(r"category-detail/(?P<slug>[-\w]*)/", views.CategoryDetailView.as_view(), name="category_detail"),
+    path("contact-us/", views.ContactUsView.as_view(), name="contact_us"),
 ]

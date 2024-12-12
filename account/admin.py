@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from account.forms import UserCreationForm, UserChangeForm
-from account.models import User, Otp, Address
+from account.models import User, Otp, Address, MyInfo
 
 
 class UserAdmin(BaseUserAdmin):
@@ -42,6 +42,11 @@ class OtpAdmin(admin.ModelAdmin):
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
     list_display = ("user", "fullname", "email", "postal_code")
+
+
+@admin.register(MyInfo)
+class MyInfoAdmin(admin.ModelAdmin):
+    list_display = ("address", "email")
 
 
 admin.site.register(User, UserAdmin)

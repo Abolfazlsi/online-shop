@@ -1,14 +1,14 @@
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, TemplateView, View, ListView
-from product.models import Product, Rating, Comment, Category
+from django.views.generic import DetailView, TemplateView, View, ListView, CreateView
+from product.models import Product, Rating, Comment, Category, ContactUs
 from django.core import serializers
 from django.template.loader import render_to_string
-
-from django.views.generic import DetailView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.urls import reverse_lazy
+from .forms import ContactUsForm
 from .models import Product, Comment
 import random
 
@@ -91,7 +91,7 @@ class ProductsListView(ListView):
         if sizes:
             products = products.filter(size__name__in=sizes).distinct()
 
-        paginator = Paginator(products, 3)
+        paginator = Paginator(products, 9)
         objects_list = paginator.get_page(page_number)
 
         context = super(ProductsListView, self).get_context_data()
@@ -136,7 +136,7 @@ class SearchProductView(ListView):
         if sizes:
             products = products.filter(size__name__in=sizes).distinct()
 
-        paginator = Paginator(products, 3)
+        paginator = Paginator(products, 9)
         objects_list = paginator.get_page(page_number)
 
         context = super(SearchProductView, self).get_context_data()
@@ -182,7 +182,7 @@ class CategoryDetailView(ListView):
         if sizes:
             products = products.filter(size__name__in=sizes).distinct()
 
-        paginator = Paginator(products, 3)
+        paginator = Paginator(products, 9)
         objects_list = paginator.get_page(page_number)
 
         context = super(CategoryDetailView, self).get_context_data()
@@ -190,3 +190,15 @@ class CategoryDetailView(ListView):
         context["selected_colors"] = colors
         context["selected_sizes"] = sizes
         return context
+
+class ContactUsView(CreateView):
+    model = ContactUs
+    form_class = ContactUsForm
+    template_name = "product/contact_us.html"
+    success_url = reverse_lazy("product:contact_us")
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        instance.save()
+        return super(ContactUsView, self).form_valid(form)
+

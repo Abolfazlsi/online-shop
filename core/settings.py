@@ -70,12 +70,12 @@ TEMPLATES = [
                 'context_processors.context_processors.pc_category',
                 'context_processors.context_processors.laptop_category',
                 'context_processors.context_processors.charger_category',
-                'context_processors.context_processors.best_products',
                 'context_processors.context_processors.cart_count',
                 'context_processors.context_processors.products_list',
                 'context_processors.context_processors.product_popular',
                 'context_processors.context_processors.product_bestseller',
                 'context_processors.context_processors.categories',
+                'context_processors.context_processors.my_info',
 
             ],
         },
