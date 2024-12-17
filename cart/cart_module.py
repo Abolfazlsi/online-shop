@@ -17,7 +17,7 @@ class Cart:
         for item in cart.values():
             product = Product.objects.get(id=int(item["id"]))
             item["product"] = product
-            item["total"] = int(item["quantity"]) * float(item["price"])
+            item["total"] = int(item["quantity"]) * int(item["price"])
             item["unique_id"] = self.unique_id_generator(product.id, item["color"], item["size"])
             yield item
 
@@ -37,7 +37,7 @@ class Cart:
         del self.session["cart"]
 
     def final_total(self):
-        total = sum((float(item["price"]) * float(item["quantity"]) for item in self.cart.values()))
+        total = sum((int(item["price"]) * int(item["quantity"]) for item in self.cart.values()))
         return total
 
     def get_product_count(self):

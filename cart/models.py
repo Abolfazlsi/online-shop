@@ -5,9 +5,10 @@ from product.models import Product
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
-    total = models.FloatField(default=0)
+    total = models.IntegerField(default=0)
     is_paid = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    address = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.user.phone
@@ -22,7 +23,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField()
     size = models.CharField(max_length=10, null=True)
     color = models.CharField(max_length=15, null=True)
-    price = models.FloatField()
+    price = models.IntegerField()
 
     def __str__(self):
         return f"{self.product}"

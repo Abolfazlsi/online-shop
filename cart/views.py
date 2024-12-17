@@ -1,9 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.views.generic import TemplateView, View, DetailView
 from product.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cart.cart_module import Cart
 from cart.models import DiscountCode, Order, OrderItem, UsedDiscountCode
+from django.conf import settings
+import requests
+import json
+from account.models import Address
+from django.http import JsonResponse, HttpResponseRedirect
 
 
 class CartDetailView(View):
@@ -66,3 +71,53 @@ class DiscountView(View):
         discount_code.save()
 
         return redirect("cart:order_detail", order.id)
+
+
+
+
+if settings.SANDBOX:
+    sandbox = 'sandbox'
+else:
+    sandbox = 'payment'
+
+ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/v4/payment/request.json"
+ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
+ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/v4/payment/verify.json"
+
+description = "نهایی کردن خرید شما از سایت ما" # it's only an example
+
+price = 100000 # it's only an example
+CallbackURL = 'http://localhost:8000/cart/verify/' # you should customize it
+
+
+class SendRequestView(View):
+    def post(self, request, pk):
+        order = get_object_or_404(Order, id=pk, user=request.user)
+        address = get_object_or_404(Address, id=request.POST.get("address"))
+        order.address = f"{address.address} - {address.phone}"
+        order.save()
+
+        data = {
+            "merchant_id": settings.MERCHANT,
+            "amount": order.total,
+            "description": description,
+            "callback_url": CallbackURL,
+        }
+        data = json.dumps(data)
+
+        headers = {'content-type': 'application/json', 'content-length': str(len(data))}
+
+        response = requests.post(ZP_API_REQUEST, data=data, headers=headers)
+
+        if response.status_code == 200:
+            response = response.json()
+
+            if response["data"]['code'] == 100:
+                url = f"{ZP_API_STARTPAY}{response["data"]['authority']}"
+                return redirect(url)
+
+            else:
+                return HttpResponse(str(response['errors']))
+
+        else:
+            return render(request, "cart/Buy_Error.html", {})

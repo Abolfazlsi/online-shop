@@ -136,3 +136,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "account.User"
+
+MERCHANT = "9bb72628-0d73-4134-bcef-f8946dcc3e5f"
+
+SANDBOX = True

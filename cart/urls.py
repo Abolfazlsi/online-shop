@@ -9,4 +9,5 @@ urlpatterns = [
     path("order-detail/<int:pk>/", views.OrderDetailView.as_view(), name="order_detail"),
     path("order-creation/", views.OrderCreationView.as_view(), name="order_creation"),
     path("discount-code/<int:pk>", views.DiscountView.as_view(), name="discount_code"),
+    path("send-request/<int:pk>", views.SendRequestView.as_view(), name="send_request"),
 ]
