@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block main %}
     <div class="container-fluid page-header py-5">
@@ -102,7 +103,7 @@
                     <div class="bg-light rounded">
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                             <h5 class="mb-0 ps-4 me-4">جمع کل</h5>
-                            <p class="mb-0 pe-4">${{ order.total }}</p>
+                            <p class="mb-0 pe-4">${{ order.total|format_price }}</p>
                         </div>
                     </div>
                 </div>

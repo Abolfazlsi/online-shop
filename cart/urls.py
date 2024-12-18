@@ -10,4 +10,5 @@ urlpatterns = [
     path("order-creation/", views.OrderCreationView.as_view(), name="order_creation"),
     path("discount-code/<int:pk>", views.DiscountView.as_view(), name="discount_code"),
     path("send-request/<int:pk>", views.SendRequestView.as_view(), name="send_request"),
+    path("verify/", views.VerifyView.as_view(), name="verify_request"),
 ]

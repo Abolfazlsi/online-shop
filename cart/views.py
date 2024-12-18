@@ -73,8 +73,6 @@ class DiscountView(View):
         return redirect("cart:order_detail", order.id)
 
 
-
-
 if settings.SANDBOX:
     sandbox = 'sandbox'
 else:
@@ -84,19 +82,30 @@ ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
 ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/v4/payment/verify.json"
 
-description = "نهایی کردن خرید شما از سایت ما" # it's only an example
+description = "نهایی کردن خرید شما از سایت ما"
 
-price = 100000 # it's only an example
-CallbackURL = 'http://localhost:8000/cart/verify/' # you should customize it
+CallbackURL = 'http://127.0.0.1:8000/cart/verify/'
 
 
 class SendRequestView(View):
     def post(self, request, pk):
+        # بازیابی سفارش بر اساس شناسه و کاربر
         order = get_object_or_404(Order, id=pk, user=request.user)
+
+        # بازیابی آدرس از POST
         address = get_object_or_404(Address, id=request.POST.get("address"))
-        order.address = f"{address.address} - {address.phone}"
+
+        # تنظیم آدرس سفارش
+        order.full_name = f"{address.fullname}"
+        order.address = f"{address.address}"
+        order.phone_number = f"{address.phone}"
+        order.postal_code = f"{address.postal_code}"
         order.save()
 
+        # ذخیره شناسه سفارش در جلسه
+        request.session["order_id"] = str(order.id)
+
+        # آماده‌سازی داده‌ها برای ارسال به API
         data = {
             "merchant_id": settings.MERCHANT,
             "amount": order.total,
@@ -105,19 +114,57 @@ class SendRequestView(View):
         }
         data = json.dumps(data)
 
+        # تنظیم هدرها
         headers = {'content-type': 'application/json', 'content-length': str(len(data))}
 
+        # ارسال درخواست به API
         response = requests.post(ZP_API_REQUEST, data=data, headers=headers)
 
+        # بررسی پاسخ API
         if response.status_code == 200:
             response = response.json()
 
             if response["data"]['code'] == 100:
-                url = f"{ZP_API_STARTPAY}{response["data"]['authority']}"
+                url = f"{ZP_API_STARTPAY}{response['data']['authority']}"
                 return redirect(url)
-
             else:
                 return HttpResponse(str(response['errors']))
-
         else:
             return render(request, "cart/Buy_Error.html", {})
+
+
+
+class VerifyView(View):
+    def get(self, request):
+        status = request.GET.get('Status')
+        authority = request.GET.get('Authority')
+        order = Order.objects.get(id=int(request.session['order_id']))
+
+        if status == "OK":
+
+
+            data = {
+                "merchant_id": settings.MERCHANT,
+                "amount": order.total,
+                "authority": authority
+            }
+            data = json.dumps(data)
+
+            headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+
+            response = requests.post(ZP_API_VERIFY, data=data, headers=headers)
+
+            if response.status_code == 200:
+                response = response.json()
+                if response['data']['code'] == 100:
+                    order.is_paid = True
+                    order.save()
+                    return render(request, "cart/successfully_pay.html", {"order": order})
+                elif response['data']['code'] == 101:
+                    return render(request, "cart/pay_again.html", {})
+                else:
+                    return render(request, "cart/unsuccessful_pay.html", {})
+            else:
+                return render(request, "cart/unsuccessful_pay.html", {})
+        else:
+            return render(request, "cart/unsuccessful_pay.html", {})

@@ -8,7 +8,10 @@ class Order(models.Model):
     total = models.IntegerField(default=0)
     is_paid = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    full_name = models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
+    phone_number = models.CharField(max_length=11, blank=True, null=True)
+    postal_code = models.CharField(max_length=11, blank=True, null=True)
 
     def __str__(self):
         return self.user.phone

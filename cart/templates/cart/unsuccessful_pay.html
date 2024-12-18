@@ -1,0 +1,81 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful Message Example</title>
+
+    <meta name="author" content="Codeconvey" />
+    <!-- Message Box CSS -->
+    <link rel="stylesheet" href="{% static "css/successfully_pay.css" %}">
+    <!--Only for demo purpose - no need to add.-->
+    <link rel="stylesheet" href="{% static "css/successfully_pay_demo.css" %}" />
+
+</head>
+<body>
+
+<div class="ScriptTop">
+    <div class="rt-container">
+        <div class="col-rt-4" id="float-right">
+
+            <!-- Ad Here -->
+
+        </div>
+        <div class="col-rt-2">
+            <ul>
+                <li><a href="{% url "home:home" %}" title="Back to tutorial page">برگشت به خانه</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<header class="ScriptHeader">
+    <div class="rt-container">
+    	<div class="col-rt-12">
+        	<div class="rt-heading">
+            </div>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="rt-container">
+          <div class="col-rt-12">
+              <div class="Scriptcontent">
+
+<!-- partial:index.partial.html -->
+<div id='card' class="animated fadeIn">
+  <div id='unsuccessful'>
+    <?xml version="1.0" encoding="utf-8"?>
+      <!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+  <path fill-rule="evenodd" d="M10.339 2.237a.531.531 0 0 0-.678 0 11.947 11.947 0 0 1-7.078 2.75.5.5 0 0 0-.479.425A12.11 12.11 0 0 0 2 7c0 5.163 3.26 9.564 7.834 11.257a.48.48 0 0 0 .332 0C14.74 16.564 18 12.163 18 7c0-.538-.035-1.069-.104-1.589a.5.5 0 0 0-.48-.425 11.947 11.947 0 0 1-7.077-2.75ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
+</svg>
+
+
+      <h3 id='status'>
+      نام موفق در پرداخت!
+    </h3>
+  </div>
+  <div id='lower-side'>
+        <p id='message'>
+            پرداخت با شکست مواجه شد
+        </p>
+      <a href="{% url "home:home" %}" id="dangerBtn">برگشت به خانه</a>
+  </div>
+</div>
+<!-- partial -->
+
+
+    		</div>
+		</div>
+    </div>
+</section>
+
+
+	</body>
+</html>
