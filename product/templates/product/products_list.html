@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load custom_filters %}
 {% block main %}
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <div class="col-lg-9">
-                            <div class="row g-4 justify-content-center" id="product-list">
+                            <div class="row g-4 justify-content-center" id="product-list" dir="rtl">
                                 {% for product in product_list %}
                                     <div class="col-md-6 col-lg-6 col-xl-4">
                                         <div class="rounded position-relative fruite-item">
@@ -133,7 +133,7 @@
                                                 <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                                                 <p>{{ product.description|truncatewords:10 }}</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">${{ product.price }}</p>
+                                                    <p class="text-dark fs-5 fw-bold mb-0"> {{ product.price|format_price }} ریال</p>
                                                 </div>
                                             </div>
                                         </div>

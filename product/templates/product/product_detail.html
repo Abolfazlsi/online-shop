@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load custom_filters %}
 {% block main %}
     <div class="container-fluid py-5 mt-5">
         <div class="container py-5">
@@ -18,7 +18,7 @@
                             <h4 class="fw-bold mb-3">{{ product.name }}</h4>
                             <p class="mb-3">{% for category in product.category.all %}
                                 {{ category }}{% endfor %}: دسته بندی </p>
-                            <h5 class="fw-bold mb-3">{{ product.price }} $</h5>
+                            <h5 class="fw-bold mb-3"><span dir="rtl"> ریال </span><span>{{ product.price|format_price }}</span></h5>
                             <div class="d-flex mb-4">
                                 <i id="rating_count" class="fa fa-star text-secondary">{{ product.ratings.count }}</i>
 

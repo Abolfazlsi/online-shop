@@ -43,7 +43,7 @@
                             </td>
 
                             <td>
-                                <p class="mb-0 mt-4">{{ order.product.price }}$</p>
+                                <p class="mb-0 mt-4"><span dir="rtl"> ریال </span><span>{{ order.product.price|format_price }}</span></p>
                             </td>
                             <td>
                                 <div class="input-group quantity mt-4" style="width: 100px;">
@@ -103,7 +103,7 @@
                     <div class="bg-light rounded">
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                             <h5 class="mb-0 ps-4 me-4">جمع کل</h5>
-                            <p class="mb-0 pe-4">${{ order.total|format_price }}</p>
+                            <p class="mb-0 pe-4"><span dir="rtl"> ریال </span><span>{{ order.total|format_price }}</span></p>
                         </div>
                     </div>
                 </div>
