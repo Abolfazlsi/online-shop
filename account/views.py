@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView
 from account.forms import OtpRegisterLoginForm, OtpVerifyForm, UserProfileForm, AddressForm
@@ -54,6 +54,16 @@ class OtpVerifyView(View):
         else:
             form.add_error("code", "invalid data")
         return render(request, "account/otp_verify.html", {"form": form})
+
+
+class LogOutView(View):
+    def get(self, request):
+
+        if request.user.is_authenticated:
+            logout(request)
+            return redirect("home:home")
+        else:
+            return redirect("home:home")
 
 
 class UserProfileView(View):

@@ -39,8 +39,8 @@ class Product(models.Model):
     price = models.IntegerField(default=0)
     product_image = models.ImageField(upload_to="product_images")
     category = models.ManyToManyField("product.Category", related_name="products")
-    color = models.ManyToManyField("product.Color", related_name="products")
-    size = models.ManyToManyField("product.Size", related_name="products", null=True, blank=True)
+    color = models.ManyToManyField("product.Color", related_name="products", blank=True)
+    size = models.ManyToManyField("product.Size", related_name="products", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True, null=True, blank=True, allow_unicode=True)
 

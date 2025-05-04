@@ -1,0 +1,56 @@
+version: '4.37'
+
+services:
+  web:
+    build: .
+    volumes:
+      - static_volume:/app/public/static
+      - media_volume:/app/public/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_ENV=production
+      - DB_HOST=db
+      - DB_NAME=shop_db
+      - DB_USER=shop_user
+      - DB_PASSWORD=admin
+      - DB_PORT=5432
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+  db:
+    image: postgres:17
+    environment:
+      - POSTGRES_DB=shop_db
+      - POSTGRES_USER=shop_user
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/app/public/static
+      - media_volume:/app/public/media
+    depends_on:
+      - web
+    networks:
+      - app_network
+
+volumes:
+  static_volume:
+  media_volume:
+  postgres_data:
+
+networks:
+  app_network:
+    driver: bridge
