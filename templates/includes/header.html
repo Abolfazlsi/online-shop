@@ -13,9 +13,9 @@
         <div class="d-flex justify-content-between">
             <div class="top-info ps-2">
                 <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
-                class="text-white">{{ info.address }}</a></small>
+                                                                                                 class="text-white">{{ info.address }}</a></small>
                 <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-                class="text-white">{{ info.email }}</a></small>
+                                                                                          class="text-white">{{ info.email }}</a></small>
             </div>
         </div>
     </div>
@@ -29,12 +29,17 @@
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
                     <a href="{% url "product:contact_us" %}"
-                       class="nav-item nav-link {% if request.resolver_match.url_name == "contact_us" %}active{% endif %}">تماس با ما</a>
+                       class="nav-item nav-link {% if request.resolver_match.url_name == "contact_us" %}active{% endif %}">تماس
+                        با ما</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">صفحات</a>
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="{% url "cart:cart_detail" %}" class="dropdown-item {% if request.resolver_match.url_name == "cart_detail" %}active{% endif %}">سبد خرید</a>
-                            <a href="{% url "account:add_address" %}" class="dropdown-item {% if request.resolver_match.url_name == "add_address" %}active{% endif %}">اطلاعات حساب</a>
+                            <a href="{% url "cart:cart_detail" %}"
+                               class="dropdown-item {% if request.resolver_match.url_name == "cart_detail" %}active{% endif %}">سبد
+                                خرید</a>
+                            <a href="{% url "account:add_address" %}"
+                               class="dropdown-item {% if request.resolver_match.url_name == "add_address" %}active{% endif %}">اطلاعات
+                                حساب</a>
                         </div>
                     </div>
                     <a href="{% url "product:products_list" %}"
@@ -62,9 +67,14 @@
                             </div>
                         </div>
                     {% else %}
+                        <a href="{% url "account:logout" %}" class="my-auto" style="margin-right: 10px">
+                            <h2 class="btn btn-outline-danger"><span class="tex text-danger">خروج</span></h2>
+                        </a>
+
                         <a href="{% url "account:user_profile" %}" class="my-auto">
                             <h2 class="btn btn-outline-dark">{{ request.user.phone }}</h2>
                         </a>
+
                     {% endif %}
                 </div>
             </div>
