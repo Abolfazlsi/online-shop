@@ -25,7 +25,7 @@ class RegisterView(View):
             phone = form.cleaned_data["phone"]
             token = str(uuid4())
             otp = Otp.objects.create(token=token, phone=phone, code=code)
-            # delete_otp.apply_async(args=[otp.id], countdown=120)
+            delete_otp.apply_async(args=[otp.id], countdown=120)
             print(code)  # for test
 
             return redirect(reverse("account:otp") + f"?token={token}")
