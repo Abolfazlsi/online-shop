@@ -7,6 +7,7 @@ from account.models import Otp, User, Address
 from uuid import uuid4
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from account.tasks import delete_otp
 
 
 # register user
@@ -23,8 +24,10 @@ class RegisterView(View):
             code = random.randint(1000, 9999)
             phone = form.cleaned_data["phone"]
             token = str(uuid4())
-            Otp.objects.create(token=token, phone=phone, code=code)
-            print(code)
+            otp = Otp.objects.create(token=token, phone=phone, code=code)
+            # delete_otp.apply_async(args=[otp.id], countdown=120)
+            print(code)  # for test
+
             return redirect(reverse("account:otp") + f"?token={token}")
         else:
             form.add_error("phone", "invalid data")

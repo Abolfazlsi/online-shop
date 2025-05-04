@@ -62,6 +62,7 @@ class Otp(models.Model):
     phone = models.CharField(max_length=11)
     code = models.SmallIntegerField()
     expire = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.phone

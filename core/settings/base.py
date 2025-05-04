@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
+    'django_celery_beat',
+
+    #  my apps
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
     'home.apps.HomeConfig',
