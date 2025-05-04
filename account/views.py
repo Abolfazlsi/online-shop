@@ -8,6 +8,7 @@ from uuid import uuid4
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from account.tasks import delete_otp
+from django.contrib import messages
 
 
 # register user
@@ -23,6 +24,7 @@ class RegisterView(View):
         if form.is_valid():
             code = random.randint(1000, 9999)
             phone = form.cleaned_data["phone"]
+
             token = str(uuid4())
             otp = Otp.objects.create(token=token, phone=phone, code=code)
             delete_otp.apply_async(args=[otp.id], countdown=120)
@@ -30,7 +32,7 @@ class RegisterView(View):
 
             return redirect(reverse("account:otp") + f"?token={token}")
         else:
-            form.add_error("phone", "invalid data")
+            form.add_error("phone", "شماره تلفن معتبر نیست")
 
         return render(request, "account/register.html", {"form": form})
 
@@ -53,9 +55,9 @@ class OtpVerifyView(View):
                 otp.delete()
                 return redirect("home:home")
             else:
-                form.add_error("code", "invalid data")
+                form.add_error("code", "کد وارد شده نادرست است")
         else:
-            form.add_error("code", "invalid data")
+            form.add_error("code", "کد وارد شده نادرست است")
         return render(request, "account/otp_verify.html", {"form": form})
 
 

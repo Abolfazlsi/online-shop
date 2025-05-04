@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from account.models import User, Address
 from django.core.exceptions import ValidationError
 from django.core import validators
+import re
 
 
 class UserCreationForm(forms.ModelForm):
@@ -44,13 +45,26 @@ class UserChangeForm(forms.ModelForm):
 
 class OtpRegisterLoginForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput(
-        attrs={"class": "w-100 form-control border-0 py-3 mb-4", "placeholder": "شماره تلفن خود را وارد کنید"}),
+        attrs={"class": "w-50 form-control border-0 py-3 mb-4", "placeholder": "شماره تلفن خود را وارد کنید"}),
         validators=[validators.MaxLengthValidator(11)])
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+
+        if not phone:
+            raise ValidationError("شماره موبایل الزامی است")
+
+        if not phone.startswith('0'):
+            raise ValidationError('شماره تلفن باید با 0 شروع شود.')
+
+        if not re.match(r'^\d{11,12}$', phone):
+            raise ValidationError('شماره تلفن معتبر نیست')
+        return phone
 
 
 class OtpVerifyForm(forms.Form):
     code = forms.CharField(widget=forms.TextInput(
-        attrs={"class": "w-100 form-control border-0 py-3 mb-4", "placeholder": "کد ارسال شده را وارد کنید"}),
+        attrs={"class": "w-50 form-control border-0 py-3 mb-4", "placeholder": "کد ارسال شده را وارد کنید"}),
         validators=[validators.MaxLengthValidator(4)])
 
 

@@ -23,11 +23,11 @@
                             {% csrf_token %}
                             {% if form.phone.errors %}
                                 {% for error in form.phone.errors %}
-                                    <p class="alert alert-danger">{{ error }}</p>
+                                    <p class="w-50 alert alert-danger" style="text-align: center">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                             {{ form.phone }}
-                            <button class="w-100 btn form-control border-secondary py-3 bg-white text-primary "
+                            <button class="w-50 btn form-control border-secondary py-3 bg-white text-primary "
                                     type="submit">ثبت
                             </button>
                         </form>
