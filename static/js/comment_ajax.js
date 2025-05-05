@@ -22,10 +22,6 @@ $(document).ready(function () {
                 } else {
                     alert('Error: ' + JSON.stringify(response.errors));
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-                alert('خطا در ارسال کامنت. لطفاً دوباره امتحان کنید.');
             }
         });
     });

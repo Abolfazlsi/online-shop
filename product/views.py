@@ -3,14 +3,11 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, TemplateView, View, ListView, CreateView
 from product.models import Product, Rating, Comment, Category, ContactUs
-from django.core import serializers
-from django.template.loader import render_to_string
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
 from django.urls import reverse_lazy
 from .forms import ContactUsForm
-from .models import Product, Comment
-import random
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from product.filter_products import products_filter
 
 
 class ProductDetailView(DetailView):
@@ -51,7 +48,8 @@ class ProductDetailView(DetailView):
         return context
 
 
-class RatingsView(View):
+class RatingsView(LoginRequiredMixin, View):
+
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         try:
@@ -67,37 +65,11 @@ class ProductsListView(ListView):
     model = Product
     template_name = "product/products_list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        request = self.request
-        min_price = request.GET.get("min_price")
-        max_price = request.GET.get("max_price")
-        filter = request.GET.get("filter")
-        colors = request.GET.getlist("color")
-        sizes = request.GET.getlist("size")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         products = Product.objects.all()
-        page_number = request.GET.get("page", 1)
+        context.update(products_filter(self.request, products))
 
-        if min_price and max_price:
-            products = products.filter(price__gte=min_price, price__lte=max_price).distinct()
-
-        if filter == "cheapest":
-            products = products.order_by("price")
-        elif filter == "expensive":
-            products = products.order_by("-price")
-
-        if colors:
-            products = products.filter(color__name__in=colors).distinct()
-
-        if sizes:
-            products = products.filter(size__name__in=sizes).distinct()
-
-        paginator = Paginator(products, 9)
-        objects_list = paginator.get_page(page_number)
-
-        context = super(ProductsListView, self).get_context_data()
-        context["product_list"] = objects_list
-        context["selected_colors"] = colors
-        context["selected_sizes"] = sizes
         return context
 
 
@@ -107,42 +79,13 @@ class SearchProductView(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get("q")
-        queryset = Product.objects.filter(name__icontains=q) if q else Product.objects.all()
-        return queryset
+        return Product.objects.filter(name__icontains=q) if q else Product.objects.all()
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        request = self.request
-        q = request.GET.get("q")
-        products = Product.objects.filter(name__icontains=q) if q else Product.objects.all()
-        page_number = request.GET.get("page")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        products = self.get_queryset()
+        context.update(products_filter(self.request, products))
 
-        min_price = request.GET.get("min_price")
-        max_price = request.GET.get("max_price")
-        filter = request.GET.get("filter")
-        colors = request.GET.getlist("color")
-        sizes = request.GET.getlist("size")
-
-        if min_price and max_price:
-            products = products.filter(price__gte=min_price, price__lte=max_price).distinct()
-
-        if filter == "cheapest":
-            products = products.order_by("price").distinct()
-        elif filter == "expensive":
-            products = products.order_by("-price").distinct()
-
-        if colors:
-            products = products.filter(color__name__in=colors).distinct()
-
-        if sizes:
-            products = products.filter(size__name__in=sizes).distinct()
-
-        paginator = Paginator(products, 9)
-        objects_list = paginator.get_page(page_number)
-
-        context = super(SearchProductView, self).get_context_data()
-        context["product_list"] = objects_list
-        context["selected_colors"] = colors
-        context["selected_sizes"] = sizes
         return context
 
 
@@ -152,53 +95,24 @@ class CategoryDetailView(ListView):
 
     def get_queryset(self):
         slug = self.kwargs.get("slug")
+        return Product.objects.filter(category__slug=slug)
 
-        queryset = Product.objects.filter(category__slug=slug)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        products = self.get_queryset()
+        context.update(products_filter(self.request, products))
 
-        return queryset
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        request = self.request
-        slug = self.kwargs.get("slug")
-        min_price = request.GET.get("min_price")
-        max_price = request.GET.get("max_price")
-        filter = request.GET.get("filter")
-        colors = request.GET.getlist("color")
-        sizes = request.GET.getlist("size")
-        products = Product.objects.filter(category__slug=slug)
-        page_number = request.GET.get("page")
-
-        if min_price and max_price:
-            products = products.filter(price__gte=min_price, price__lte=max_price).distinct()
-
-        if filter == "cheapest":
-            products = products.order_by("price")
-        elif filter == "expensive":
-            products = products.order_by("-price")
-
-        if colors:
-            products = products.filter(color__name__in=colors).distinct()
-
-        if sizes:
-            products = products.filter(size__name__in=sizes).distinct()
-
-        paginator = Paginator(products, 9)
-        objects_list = paginator.get_page(page_number)
-
-        context = super(CategoryDetailView, self).get_context_data()
-        context["product_list"] = objects_list
-        context["selected_colors"] = colors
-        context["selected_sizes"] = sizes
         return context
+
 
 class ContactUsView(CreateView):
     model = ContactUs
     form_class = ContactUsForm
     template_name = "product/contact_us.html"
     success_url = reverse_lazy("product:contact_us")
+
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
         instance.save()
         return super(ContactUsView, self).form_valid(form)
-
