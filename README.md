@@ -24,6 +24,7 @@
 - **Filter products**
 - **Search products**
 - **Comment and Rating(Like)**
+- **Categories**
 
 ---
 
