@@ -68,7 +68,7 @@ def charger_category(request):
 
 
 def product_popular(request):
-    product = Product.objects.annotate(rating_count=Count("ratings")).order_by('-rating_count')[0]
+    product = Product.objects.annotate(rating_count=Count("ratings")).order_by('-rating_count')[0] if Product.objects.exists() else None
 
     return {"popular": product}
 
